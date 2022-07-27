@@ -83,45 +83,46 @@
             // Deposit Button Event Handler
             const depositBtn=document.getElementById("addDeposit")
             depositBtn.addEventListener('click',function(){
-                const depositAmount=document.getElementById("depositAmount").value;
-                const depositNumber=parseFloat(depositAmount)
-
-                const currentDeposit=document.getElementById("currentDeposit").innerText;
-                const currentDepositNumber=parseFloat(currentDeposit);
-                const totalDeposit=depositNumber+currentDepositNumber;
-
-                document.getElementById("currentDeposit").innerText=totalDeposit;
-
-                //Add current Balance
-                const currentBalance=document.getElementById("currentBalance").innerText;
-                const currentBalanceNumber=parseFloat(currentBalance);
-                const newBalance=totalDeposit+currentBalanceNumber;
-                document.getElementById("currentBalance").innerText=newBalance;
+               const depositNumber=getInputNumber("depositAmount")
+               updateDeposit("currentDeposit",depositNumber)
+               updateDeposit("currentBalance",depositNumber)
             })
-
             // Withdraw Button Event Handler
             const withdrawBtn=document.getElementById("addWithdraw");
             withdrawBtn.addEventListener("click",function(){
-                const WithdrawAmount = document.getElementById("WithdrawAmount").value;
-                const WithdrawNumber = parseFloat(WithdrawAmount);
-
+                const WithdrawNumber = getInputNumber("WithdrawAmount");
+                
                 const currentWithdraw=document.getElementById("currentWithdraw").innerText;
                 const currentWithdrawNumber=parseFloat(currentWithdraw);
                 let totalWithdraw=WithdrawNumber+currentWithdrawNumber;
 
                 let nweBalance=document.getElementById("currentBalance").innerText;
-                
-                // 
-                if(totalWithdraw>nweBalance){
+                if(WithdrawNumber>nweBalance){
                     alert('Balance is lower  than withdrawal amount!!')
                 }else{
-                   document.getElementById("currentWithdraw").innerText=totalWithdraw;
+                   document.getElementById("currentWithdraw").innerText=WithdrawNumber;
                    //After Withdraw current Balance
                    let newBalanceNumber=parseFloat(nweBalance);
-                   let newBalance=newBalanceNumber-totalWithdraw;
+                   let newBalance=newBalanceNumber-WithdrawNumber;
                    document.getElementById("currentBalance").innerText=newBalance;
                 }
-               
+
+                // Re Usable Function For depositNumber &  WithdrawNumber
+                function getInputNumber(id){
+                const  amount=document.getElementById(id).value;
+                const  amountNumber=parseFloat(amount);
+                return amountNumber;
+                }
+
+                // Re Usable Function For Current Deposit & Current Balance
+                function updateDeposit(id,depositNumber){
+                const current=document.getElementById(id).innerText;
+                const currentNumber=parseFloat(current);
+                const totalAmount=depositNumber+currentNumber;
+                document.getElementById(id).innerText=totalAmount;
+               }
+
+               // Re Usable Function For Current Withdraw & Current Balance
             })
         </script>    
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
